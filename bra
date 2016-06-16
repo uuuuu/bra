@@ -1,0 +1,120 @@
+#!/usr/bin/gawk -f
+#
+# bra: display pictures in braille unicode characters
+#      *requires imagemagick's convert*
+#⠀⠀⠠⣤⣶⣶⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⡾⠿⢷⣄⠀⠀
+#⠀⠀⠈⣿⣿⢻⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣿⡟⠋⠁⠀⣼⣿⠀⠀
+#⠀⠀⠀⠨⣿⣇⠹⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣰⣾⣿⠋⠁⠀⠀⢀⣼⣿⠇⠀⠀
+#⠀⠀⠀⠀⢹⣿⡀⠘⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡟⠉⠀⠀⠀⠀⣤⣾⡿⠃⠀⠀⠀
+#⠀⠀⠀⠀⠈⣿⣇⠀⠈⢿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⠟⠁⠀⠀⠀⠀⢠⣾⣿⠏⠀⠀⠀⠀⠀
+#⠀⠀⠀⠀⠀⠸⣿⡆⠀⠈⢻⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⠟⠀⠀⠀⠀⠀⢀⣴⣿⡟⠃⠀⠀⠀⠀⠀⠀
+#⠀⠀⠀⠀⠀⠀⠸⣿⡆⠀⠀⠻⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⡿⠃⠀⠀⠀⠀⠀⣠⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠀⠀⠀⠀⠀⠸⣿⣇⠀⠀⢹⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠇⠀⠀⠀⢀⣼⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⡄⣠⢞⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢳⣶⣦⣴⣿⣿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣟⣏⣿⢾⢾⣒⣶⢤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣄⣴⣖⣾⡿⣾⣍⡿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠀⠀⠀⠀⠀⠀⠀⡻⠵⢾⡹⣕⣏⡟⣾⢵⣪⣻⣒⡦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡴⣿⢿⢾⣻⣹⣓⣿⢮⢿⢵⡫⡂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠀⠀⠀⠀⠀⠀⢠⠱⣝⢎⣳⡚⡵⣋⠾⣍⣓⠯⣗⡧⡯⣶⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣺⡿⣞⣏⣷⠿⣾⣹⡹⣕⣗⣧⠷⣓⠅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠀⠀⠀⠀⠀⢀⢌⠮⣒⠵⡳⡱⡩⣊⢟⢎⡵⣋⡮⣣⠯⣿⣹⡄⠀⠀⠀⠀⠀⠀⠀⠀⣨⣿⣿⢽⡳⡗⣗⡿⢥⠿⡵⣕⣛⣺⢕⢕⢥⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠀⠀⣀⣤⣼⡷⣉⢊⠶⡡⡫⡪⠮⡪⡳⡱⣩⢓⣭⠾⣼⢷⣿⡷⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⠿⣽⠭⣗⣧⠿⡝⣶⢫⢽⢪⢵⢛⠦⣳⣿⣶⣦⣤⣤⣀⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠀⣜⡾⣿⣟⣿⢕⢖⠭⡲⣕⢕⠕⣕⢝⡵⡱⣍⢶⣫⢵⣻⣯⣏⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⣻⡗⣿⢺⣩⢝⡾⣩⠾⡬⢷⡚⡵⡵⣾⣿⣿⣿⣿⢿⣻⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠰⢵⢧⢿⣟⣿⣲⡱⣫⢖⢭⣒⠭⣎⢎⢷⡱⣋⣮⣻⣽⣿⣿⣿⣷⣶⣤⣤⣶⣾⣿⣿⣿⣷⣿⣳⣺⢾⣉⡷⠾⣍⣓⡞⣎⡾⠵⡽⣿⣿⣿⣟⡿⣿⣳⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠰⣋⡟⣞⣿⣮⢿⡺⡵⡞⣝⡬⢯⠶⡭⢾⡹⣜⣾⢾⣻⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣭⣟⡯⣧⣫⢗⣫⢯⢝⡶⢾⡹⣼⣹⣿⣿⣿⣿⡭⡟⣯⢭⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠺⢥⢟⡵⣾⣻⣏⢿⡲⣿⣙⣪⣓⡞⣖⡯⢧⣻⡭⣟⣷⣟⣿⣝⢟⣽⡾⢶⠯⡿⣿⡹⣿⣯⣿⢯⣛⡽⣵⣫⢛⣖⡻⡽⣾⣽⣽⣿⣿⣻⣳⢻⠽⡾⣵⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠘⣽⣾⣾⡿⡿⠟⢿⣝⣵⣳⠷⣿⢵⢿⣹⣵⢿⡻⢿⡱⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠉⠳⣿⢽⣽⣱⣿⣪⢷⣯⣽⣽⣿⢿⣿⣿⣷⣟⣿⣟⣿⣷⠷⡯⠀⠀⠀⠀⠀⠀⠀
+#⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠓⠑⠛⠲⠫⠝⠞⠉⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠓⠿⡭⢯⠯⣏⡯⠯⠿⠟⠋⠁⠉⠉⠉⠉⠛⠛⠛⠛⠀⠀⠀⠀⠀⠀⠀
+# synopsis:
+# bra [-v n={ 1 | 0 } ] [-v -b=N] [ WIDTH HEIGHT ] IMAGE
+#   b -- imagemagick modulate expression "brightness,saturation,hue"
+#        using percentage values
+#   n -- 0|1 - negate/invert image (1 by default)
+#
+# example:
+# $ bra -v b=125 -v n=1 $(tput cols) $(tput lines) t.png"
+#
+# NOTE: processes whole file as single image
+#
+# credits:
+# sshbio/drawk https://gist.github.com/sshbio/cb0073a0e8c50a681288c8bff74d9c4b
+# asciimoo/drawille https://github.com/asciimoo/drawille
+
+function prepare_line() {
+    while ((convert | getline) > 0 ) {
+        if ($0 ~ /^#/) continue
+        gsub(" ","")
+        buf = buf $0
+        if (length(buf) > pixels_left) {
+            # single dot line filled
+            line[i] = line[i] sprintf("%s",substr(buf,0,pixels_left))
+            buf = substr(buf,pixels_left + 1)
+            pixels_left = width
+            return
+        } else {
+            # buffer short - just adding to line
+            line[i] = line[i] buf
+            pixels_left = pixels_left - length(buf)
+            buf = ""
+            pos = 0
+        }
+    }
+    # FIXME print leftover
+    exit
+}
+
+BEGIN {
+    # default brightness
+    if (b == "") b = 140
+    # default negate
+    if (n == "") n = 1
+    if (n == 1) { n = " -negate " ; } else { n = "" }
+    if (ARGC == 2) {
+        convert = "convert " ARGV[1] n " -compress none -modulate " b " pbm:-"
+    } else {
+        if (ARGC == 4) {
+            convert = "convert " ARGV[3] n " -compress none -modulate " b \
+                " -resize " ARGV[1] * 2 "x" ARGV[2] * 4 " pbm:-";
+        }
+        else {
+            # awk sucks
+            exit
+        }
+    }
+
+    # skip format line and dimensions
+    while (1) {
+        convert | getline
+        if ($0 ~ /^#/) continue
+        header = header + 1
+        if (header > 1 ) {
+            # take width
+            pixels_left = width = $1;
+            break
+        }
+    }
+
+    while (1) {
+        for (i = 1; i<=4; i++) {
+            # pbm standard limits line to 70 chars
+            prepare_line()
+        }
+
+        # For each character to be drawn
+        for (i = 0; 2 * i < length(line[1]); i++) {
+            # Char number = initial offset +
+            # Sum of characters offsets * 0 or 1 on the grid
+            printf("%c", 10240 \
+            + 1   * substr(line[1], 2 * i    , 1) \
+            + 8   * substr(line[1], 2 * i + 1, 1) \
+            + 2   * substr(line[2], 2 * i    , 1) \
+            + 16  * substr(line[2], 2 * i + 1, 1) \
+            + 4   * substr(line[3], 2 * i    , 1) \
+            + 32  * substr(line[3], 2 * i + 1, 1) \
+            + 64  * substr(line[4], 2 * i    , 1) \
+            + 128 * substr(line[4], 2 * i + 1, 1));
+        }
+        print ""
+
+        # clear line array
+        split("",line);
+    }
+}
+
